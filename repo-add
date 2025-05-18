@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Arch Linux to EndeavourOS conversion (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+# Author: letslovesailors
+
+echo "===> Converting Arch Linux to EndeavourOS <==="
+
+echo "➤ Adding EndeavourOS repository… :p"
+sudo bash -c 'cat >> /etc/pacman.conf <<EOF
+
+[endeavouros]
+SigLevel = PackageRequired
+Include = /etc/pacman.d/endeavouros-mirrorlist
+EOF'
+
+echo "➤ Creating mirrorlist file… /3"
+sudo bash -c 'echo "Server = https://mirror.alpix.eu/endeavouros/repo/\$repo/\$arch" > /etc/pacman.d/endeavouros-mirrorlist'
+
+echo "➤ Updating package database… "
+sudo pacman -Sy
+
+echo "➤ Installing essential packages… "
+sudo pacman -S --noconfirm \
+    endeavouros-keyring endeavouros-mirrorlist \
+    eos-hooks eos-translations eos-update-notifier \
+    yay welcome
+
+
+echo " end ! \(＾▽＾)/"
+echo " Reboot is recommended."
